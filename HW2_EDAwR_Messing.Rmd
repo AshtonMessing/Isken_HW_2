@@ -97,14 +97,14 @@ You should read the **county.csv** file into a data frame named county_df and
 **county_mi_df.csv** into a data frame named county_mi_df.
 
 ```{r read_countydata}
-# county_df <- ???
-# county_mi_df <- ???
+county_df <- read.csv(file = "./data/county.csv", header = TRUE)
+county_mi_df <- read.csv(file = "./data/county_MI.csv", header = TRUE)
 
 ```
 
 * What does each row represent?
 
-> Put your answer here ... 
+Each Row reperesents a county and its population information 
 
 Check the structure of each data.frame and use the `summary` function to begin
 exploring the data. 
@@ -120,7 +120,9 @@ summary(county_df)
 summary(county_mi_df)
 ```
 
-> Put your answer here ... 
+There seems to be no NA values present inside the data
+
+The two dataframes seem to be identicle in structure
 
 **Unless otherwise specified, you should use the ggplot2 package for all of the
 following plots.**
