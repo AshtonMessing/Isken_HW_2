@@ -142,18 +142,24 @@ In addition, compute and display the following statistics for Income and IncomeP
 
 
 ```{r summary_stats}
-
+mean(county_df$Income)
+median(county_df$Income)
+summary(county_df$Income)
 ```
 
 ```{r histo_dens}
+ggplot(data=county_df, aes(x = Income)) + 
+  geom_histogram()
 
+ggplot(data=county_df, aes(x = IncomePerCap)) + 
+  geom_histogram()
 ```
 
 
 Write a short paragraph describing the distribution of of these two variables.
 
-> Your interpretation of the summary stats and plots above...
->
+The Income per cap has a much tigher bell curve than just average income 
+>Write more about the 2 variables
 
 Repeat the histogram for Income but make the following style changes to the plot.
 
@@ -164,23 +170,27 @@ Repeat the histogram for Income but make the following style changes to the plot
 
 ```{r histo_stylechanges}
 
+ggplot(data = county_df) + 
+  geom_histogram(aes(x = Income), fill="steelblue", colour="Black") +
+  labs(x = "Median income", y = "Number of counties", title = "Distribution of median income for US counties") 
+
 ```
 
 Now create a set of histograms for Income in which you facet by Division.
 
 ```{r histos_division}
-# ggplot(county_df) + 
-#   geom_histogram(aes(x=Income)) +
-#   ???
+ ggplot(county_df) + 
+   geom_histogram(aes(x=Income)) +
+    facet_grid(. ~ Division)
 ```
 
 Since the number of counties varies by Division, create a new version of the plot above but modify so that the y-axis shows frequency percentages instead of
 counts. Hint: `..density..`
 
 ```{r histos_division_density}
-# ggplot(county_df) + 
-#   geom_histogram(aes(???)) +
-#   ???
+ ggplot(county_df) + 
+   geom_histogram(aes(percent(Income))) +
+    facet_grid(. ~ Division)
 ```
 
 
