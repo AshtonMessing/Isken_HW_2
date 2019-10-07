@@ -259,11 +259,28 @@ Create several boxplots and/or violin plots showing how the peninsulas compare w
 some of the other variables. Summarize your findings in a few short paragraphs.
 
 ```{r boxplots_upvlp}
+ggplot(county_mi_df, aes(x = '' , y = Income)) +
+  geom_violin() + 
+  facet_grid(. ~ peninsula) 
 
+ggplot(county_mi_df, aes(x = '' , y = TotalPop)) +
+  geom_violin() + 
+  facet_grid(. ~ peninsula) 
 
+ggplot(county_mi_df, aes(x = '' , y = Transit)) +
+  geom_violin() + 
+  facet_grid(. ~ peninsula) 
+
+ggplot(county_mi_df, aes(x = '' , y = MeanCommute)) +
+  geom_violin() + 
+  facet_grid(. ~ peninsula) 
+
+ggplot(county_mi_df, aes(x = '' , y = Unemployment)) +
+  geom_violin() + 
+  facet_grid(. ~ peninsula) 
 ```
 
-> Your discussion ...
+As shown in the charts above the Lower Peninsula having a higher average income is no suprise due to the populaton density between them which is shown in the second graph. Although what the second graph shows us is that a large ammount of the area in the lower peninsula is like the upper with a low population density but the lower peninsula has some areas with a very large amount of population. Looking at the third set we look at percentage of people that use public transportation to get to work. this is intresting to look at because a resonable assumtion would be that a higher percentage of people use public transportation in the lower peninsula than the upper but based off the graph it seems to be hard to tell. In the lower we have a small ammount of area in the higher percentages but a vast majority tapers off avbove 1%. In the upper penisula it seems to be more intresting in that like the lower it tapers off close to the 1% line but then balloons out from 1.5 to just over 2%. this shows that although the upper peninsula is though to be just small towns it seems that the public transportation is used quite a but. The fourth chart  shows mean communte for upper bs lower peninsula. this shows that in the lower peninsula our mean commute is significantly higher than someone in the upper peninsula. The highest average commute for someone living in the UP is just unfer 25 min with a minumum below 15 however in the LP we have a high that is approching 35 min and a low around 17 showing that people living in the lower peninsula on average have a much higher average commute. Moving to the final graph we look at unemployment rates between the upper and lower peninsula. when looking at the graph we can see that the UP has a higer unemployment rate than the lower considering the lowest for the LP is less than 5% while the lowest for the up is just under 6% and for the high end the highest in the LP is just over 12 while for the UP it is over 13%. The intresting thing that is shown in the graph however is that both seem to have the mean of the unemployment rate hovering just above 6%.
 
 
 ### Problem 4 - Basic bar chart
