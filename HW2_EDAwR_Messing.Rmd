@@ -181,6 +181,7 @@ Now create a set of histograms for Income in which you facet by Division.
 ```{r histos_division}
  ggplot(county_df) + 
    geom_histogram(aes(x=Income)) +
+   labs(x = "Median income", y = "Number of counties", title = "Distribution of median income for US Divisions") +
     facet_grid(. ~ Division)
 ```
 
@@ -191,7 +192,8 @@ counts. Hint: `..density..`
  ggplot(county_df) + 
    geom_histogram(aes(x=(Income))) +
    facet_grid(. ~ Division) +
-   scale_y_continuous(labels = scales::percent)
+   scale_y_continuous(labels = scales::percent) + 
+  labs(x = "Median income", y = "Percent of counties", title = "Distribution of median income for US Regions") 
 ```
 
 
@@ -201,15 +203,16 @@ see that for both of these plot types, ggplot wants an `x` aesthetic to act as a
 ```{r box_violin}
 # Boxplots and violin plots
 ggplot(county_df, aes(x = Region, y = Income)) +
-  geom_boxplot()
+  geom_boxplot() +
+  labs(x = "Region", y = "Median Income", title = "Boxplot of median income for US Regions") 
 
 ggplot(county_df, aes(x = Region, y = Income)) +
-  geom_violin()
+  geom_violin() + 
+  labs(x = "Region", y = "Median Income", title = "ViolinPlot of median income for US Regions")
 
 ```
 
-> Your interpretation ...
->
+what these graphs reveal is that all regions but the souths largest percentage of median income is around 50,000 a year but what is also intresting is that the south has the lowest median by the largest margine but also the largest median out of any other region giving it the largest variation. However when looking at the boxplot it is revealed that the south has by far the lowest avearage and quartiles and all of the values thtat were show as the highest in the violin plot are all outliers.
 
 Repeat the histogram of Income but only for counties with less than 500,000 people. Do NOT use
 dplyr to do the filtering - instead, use boolean indexing (see intro to dataframes Rmd file).
@@ -220,7 +223,8 @@ dplyr to do the filtering - instead, use boolean indexing (see intro to datafram
 isLessThan500K <- county_df$TotalPop <  500000
 
 ggplot(data=county_df[isLessThan500K,], aes(x = Income)) + 
-  geom_histogram()
+  geom_histogram() + 
+   labs(x = "Median Income", y = "Count", title = "Count of Average income for counties with less than 500,000 people")
 
 
 ```
@@ -245,7 +249,8 @@ your graph has a title and good axis labels.
 
 ggplot(county_mi_df, aes(x = '' , y = Income)) +
   geom_violin() + 
-  facet_grid(. ~ peninsula) 
+  facet_grid(. ~ peninsula) + 
+   labs(x = "", y = "Median Income", title = "Violin Plot of median income for Upper and Lower Peninsula")
   
 
 ```
@@ -261,23 +266,30 @@ some of the other variables. Summarize your findings in a few short paragraphs.
 ```{r boxplots_upvlp}
 ggplot(county_mi_df, aes(x = '' , y = Income)) +
   geom_violin() + 
-  facet_grid(. ~ peninsula) 
-
+  facet_grid(. ~ peninsula) + 
+   labs(x = "", y = "Median Income", title = "Median income for Upper and Lower Peninsula")
+  
 ggplot(county_mi_df, aes(x = '' , y = TotalPop)) +
   geom_violin() + 
-  facet_grid(. ~ peninsula) 
-
+  facet_grid(. ~ peninsula) +
+  labs(x = "", y = "Total Population", title = "Total County Population for Upper and Lower Peninsula")
+  
 ggplot(county_mi_df, aes(x = '' , y = Transit)) +
   geom_violin() + 
-  facet_grid(. ~ peninsula) 
-
+  facet_grid(. ~ peninsula) + 
+  labs(x = "", y = "Public Transit Usage Percentage", title = "Public Transit Usage for Upper and Lower Peninsula")
+  
 ggplot(county_mi_df, aes(x = '' , y = MeanCommute)) +
   geom_violin() + 
-  facet_grid(. ~ peninsula) 
+  facet_grid(. ~ peninsula) + 
+  labs(x = "", y = "Average Commute", title = "Average Commute for Upper and Lower Peninsula")
+  
 
 ggplot(county_mi_df, aes(x = '' , y = Unemployment)) +
   geom_violin() + 
-  facet_grid(. ~ peninsula) 
+  facet_grid(. ~ peninsula) + 
+  labs(x = "", y = "Unemployment Percentage", title = "Unemployment percentage for Upper and Lower Peninsula")
+  
 ```
 
 As shown in the charts above the Lower Peninsula having a higher average income is no suprise due to the populaton density between them which is shown in the second graph. Although what the second graph shows us is that a large ammount of the area in the lower peninsula is like the upper with a low population density but the lower peninsula has some areas with a very large amount of population. Looking at the third set we look at percentage of people that use public transportation to get to work. this is intresting to look at because a resonable assumtion would be that a higher percentage of people use public transportation in the lower peninsula than the upper but based off the graph it seems to be hard to tell. In the lower we have a small ammount of area in the higher percentages but a vast majority tapers off avbove 1%. In the upper penisula it seems to be more intresting in that like the lower it tapers off close to the 1% line but then balloons out from 1.5 to just over 2%. this shows that although the upper peninsula is though to be just small towns it seems that the public transportation is used quite a but. The fourth chart  shows mean communte for upper bs lower peninsula. this shows that in the lower peninsula our mean commute is significantly higher than someone in the upper peninsula. The highest average commute for someone living in the UP is just unfer 25 min with a minumum below 15 however in the LP we have a high that is approching 35 min and a low around 17 showing that people living in the lower peninsula on average have a much higher average commute. Moving to the final graph we look at unemployment rates between the upper and lower peninsula. when looking at the graph we can see that the UP has a higer unemployment rate than the lower considering the lowest for the LP is less than 5% while the lowest for the up is just under 6% and for the high end the highest in the LP is just over 12 while for the UP it is over 13%. The intresting thing that is shown in the graph however is that both seem to have the mean of the unemployment rate hovering just above 6%.
@@ -291,8 +303,11 @@ x-axis labels so that they don't obscure each other.
 
 ```{r bar_counties_by_state}
 
-ggplot(county_df, aes(x = State , y = CountyId )) +
-  geom_violin()
+ggplot(county_df, aes(x = State)) +
+  geom_bar(aes(color = Region)) + 
+  scale_x_discrete(expand = waiver()) + 
+  labs(x = "State Name", y = "Number of Couties", title = "Number of Counties by State")
+  
 
 ```
 
@@ -311,7 +326,9 @@ IncomePerCap and MeanCommute.
 ```{r xy_inc_commute}
 
 ggplot(county_mi_df, aes(x = IncomePerCap , y = MeanCommute)) +
- geom_point()
+ geom_point() + 
+  labs(x = "Income Per Capita", y = "Average Commute", title = "Average Commute vs. Income per capita for Michigan")
+  
 
 ```
 
@@ -321,10 +338,13 @@ create a similar plot comparing Income and Professional.
 
 ```{r xy_inc_commute_peninsula}
 ggplot(county_mi_df, aes(x = IncomePerCap , y = MeanCommute)) +
- geom_point(aes(size = TotalPop, color = peninsula))
+ geom_point(aes(size = TotalPop, color = peninsula)) + 
+  labs(x = "Income Per Capita", y = "Average Commute", title = "Average Commute vs. Income per capita for Upper & Lower peninsula")
+  
 
 ggplot(county_mi_df, aes(x = IncomePerCap , y = Professional)) +
- geom_point(aes(size = TotalPop, color = peninsula))
+ geom_point(aes(size = TotalPop, color = peninsula)) +
+  labs(x = "Income Per Capita", y = "Professional Percentage", title = "Income per capita vs. Professional Percentage for Upper & Lower peninsula")
 ```
 
 The first graph shows that the mean commute seems to not have a large affect on income but rather that the upper vs lower peninsula has the larger affect on the average income per capita. When you add the color to show the Upper and Lower peninsula it is very easy to seee that all of the UP points are focused in the lower left of the graph, meaning that they have shorter commutes but lower income. This graph back up my discoveries earlier when I came to the same conclusion in the violin plots. When looking at the second graph there are a couple conclusions that could be drawn from a quick analysis. First, for the LP data it is clear to see that there is a linear positive relationship between professional population and income per capita meaning that the more percentage of perfesionals in a county the more likely the income per capita is tio be larger. The same relationship appears to be developing for the UP also but not nearly as strong as the LP. additionaly there is one large outlier where almost 40% of the population is considered professional but the income per capita does not match with the rest of the UP datapoints. This also shows that there may be a relationship between population and professionals or Income per capita but it would need to be analyzed further to truly determin if there is a realationship.
@@ -338,11 +358,13 @@ peninsulas?
 
 ggplot(county_mi_df, aes(x = IncomePerCap , y = Professional)) +
  geom_point(aes(size = TotalPop)) +
-  facet_grid(. ~ peninsula)
+  facet_grid(. ~ peninsula) + 
+  labs(x = "Income Per Capita", y = "Professional Percentage", title = "Income per capita vs. Professional Percentage for Upper & Lower peninsula")
 
 ggplot(county_mi_df, aes(x = IncomePerCap , y = Poverty)) +
  geom_point(aes(size = TotalPop)) +
-  facet_grid(. ~ peninsula)
+  facet_grid(. ~ peninsula) + 
+  labs(x = "Income Per Capita", y = "Poverty Percentage", title = "Income per capita vs. Poverty Percentage for Upper & Lower peninsula")
 
 ```
 
@@ -353,7 +375,8 @@ Create a scatter plot of TotalPop by IncomePerCap.
 ```{r xy_pop_inc}
 
 ggplot(county_df, aes(x = IncomePerCap , y = TotalPop)) +
- geom_point()
+ geom_point() +
+  labs(x = "Income Per Capita", y = "Total Population", title = "Income per capita vs. Total Population for united States")
 
 ```
 
@@ -368,10 +391,12 @@ transform of data when plotting.
 ```{r log10}
 
 ggplot(county_df, aes(x = IncomePerCap , y = log10(TotalPop))) +
- geom_point()
+ geom_point() + 
+  labs(x = "Income Per Capita", y = "Log 10 of Total Population", title = "Income per capita vs. Log 10 of Total Population for united States")
 
 ggplot(county_df, aes(x = IncomePerCap , y = log10(TotalPop))) +
- geom_point(aes(color = Region))
+ geom_point(aes(color = Region)) + 
+  labs(x = "Income Per Capita", y = "Log 10 of Total Population", title = "Income per capita vs. Log 10 of Total Population for united States")
 
 ```
 
