@@ -189,8 +189,9 @@ counts. Hint: `..density..`
 
 ```{r histos_division_density}
  ggplot(county_df) + 
-   geom_histogram(aes(percent(Income))) +
-    facet_grid(. ~ Division)
+   geom_histogram(aes(x=(Income))) +
+   facet_grid(. ~ Division) +
+   scale_y_continuous(labels = scales::percent)
 ```
 
 
@@ -199,6 +200,11 @@ see that for both of these plot types, ggplot wants an `x` aesthetic to act as a
 
 ```{r box_violin}
 # Boxplots and violin plots
+ggplot(county_df, aes(x = Region, y = Income)) +
+  geom_boxplot()
+
+ggplot(county_df, aes(x = Region, y = Income)) +
+  geom_violin()
 
 ```
 
@@ -209,7 +215,12 @@ Repeat the histogram of Income but only for counties with less than 500,000 peop
 dplyr to do the filtering - instead, use boolean indexing (see intro to dataframes Rmd file).
 
 ```{r histo_lt1.5m1}
+#isLessThan500K <- county_df[county_df$TotalPop <  500000,]
 
+isLessThan500K <- county_df$TotalPop <  500000
+
+ggplot(data=county_df[isLessThan500K,], aes(x = Income)) + 
+  geom_histogram()
 
 
 ```
@@ -218,6 +229,10 @@ dplyr to do the filtering - instead, use boolean indexing (see intro to datafram
 Income. 
 
 ```{r hackerxtra_kdoverlay}
+
+ggplot(data=county_df, aes(x = Income)) + 
+  geom_histogram() +
+  geom_density(color="blue")
 
 ```
 
