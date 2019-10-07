@@ -308,6 +308,9 @@ IncomePerCap and MeanCommute.
 
 ```{r xy_inc_commute}
 
+ggplot(county_mi_df, aes(x = IncomePerCap , y = MeanCommute)) +
+ geom_point()
+
 ```
 
 Create a modified version of the above scatter plot in which the point color
@@ -315,11 +318,14 @@ is mapped to peninsula and the size is mapped to total population. In addition,
 create a similar plot comparing Income and Professional.
 
 ```{r xy_inc_commute_peninsula}
+ggplot(county_mi_df, aes(x = IncomePerCap , y = MeanCommute)) +
+ geom_point(aes(size = TotalPop, color = peninsula))
 
+ggplot(county_mi_df, aes(x = IncomePerCap , y = Professional)) +
+ geom_point(aes(size = TotalPop, color = peninsula))
 ```
 
-> Your thoughts on the relationship between these variables?
->
+The first graph shows that the mean commute seems to not have a large affect on income but rather that the upper vs lower peninsula has the larger affect on the average income per capita. When you add the color to show the Upper and Lower peninsula it is very easy to seee that all of the UP points are focused in the lower left of the graph, meaning that they have shorter commutes but lower income. This graph back up my discoveries earlier when I came to the same conclusion in the violin plots. When looking at the second graph there are a couple conclusions that could be drawn from a quick analysis. First, for the LP data it is clear to see that there is a linear positive relationship between professional population and income per capita meaning that the more percentage of perfesionals in a county the more likely the income per capita is tio be larger. The same relationship appears to be developing for the UP also but not nearly as strong as the LP. additionaly there is one large outlier where almost 40% of the population is considered professional but the income per capita does not match with the rest of the UP datapoints. This also shows that there may be a relationship between population and professionals or Income per capita but it would need to be analyzed further to truly determin if there is a realationship.
 
 Now, create a few more scatter plots using variables of your choosing in which
 you facet by peninsula as well. How do the relationships compare across the
