@@ -291,6 +291,8 @@ x-axis labels so that they don't obscure each other.
 
 ```{r bar_counties_by_state}
 
+ggplot(county_df, aes(x = State , y = CountyId )) +
+  geom_violin()
 
 ```
 
@@ -334,6 +336,14 @@ peninsulas?
 
 ```{r xy_faceted_peninsula1}
 
+ggplot(county_mi_df, aes(x = IncomePerCap , y = Professional)) +
+ geom_point(aes(size = TotalPop)) +
+  facet_grid(. ~ peninsula)
+
+ggplot(county_mi_df, aes(x = IncomePerCap , y = Poverty)) +
+ geom_point(aes(size = TotalPop)) +
+  facet_grid(. ~ peninsula)
+
 ```
 
 Now use the full US data frame, county_df.
@@ -341,6 +351,9 @@ Now use the full US data frame, county_df.
 Create a scatter plot of TotalPop by IncomePerCap.
 
 ```{r xy_pop_inc}
+
+ggplot(county_df, aes(x = IncomePerCap , y = TotalPop)) +
+ geom_point()
 
 ```
 
@@ -354,9 +367,15 @@ transform of data when plotting.
 
 ```{r log10}
 
+ggplot(county_df, aes(x = IncomePerCap , y = log10(TotalPop))) +
+ geom_point()
+
+ggplot(county_df, aes(x = IncomePerCap , y = log10(TotalPop))) +
+ geom_point(aes(color = Region))
+
 ```
 
-> Discussion ...
+Using log10 for the population variable allows us to better visualize the relationship between total populaton and income per capita. The reason this helps is that when looking at the origional graph above you can see that most of the datapoints fall near the bottom of the scale but a small number of outliers cause the scaling of the graph to strech to be able to accomodate them. This causes issues when viewing the graph because you are not concerned as much with outliers but more with the other infomation which becomes very hard to read. However when you use the log of a variable on the graph it works to correct this issue by brining the outliers in and making the graph more readable. 
 
 ## Deliverables
 
