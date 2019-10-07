@@ -243,13 +243,17 @@ your graph has a title and good axis labels.
 
 ```{r vp_inc_by_peninsula}
 
+ggplot(county_mi_df, aes(x = '' , y = Income)) +
+  geom_violin() + 
+  facet_grid(. ~ peninsula) 
+  
 
 ```
 
 Do the peninsulas 
 differ with respect to distribution of median income over the counties?
 
-> Your discussion...
+The Graph above shows that the Lower Peninsula has a much wider variation of average income. In the lower Peninsula the lowest average is lower than the Uppers lowest and also the Lowers highest income is significantly larger than the highest that we see in the upper.
 
 Create several boxplots and/or violin plots showing how the peninsulas compare with respect to
 some of the other variables. Summarize your findings in a few short paragraphs.
