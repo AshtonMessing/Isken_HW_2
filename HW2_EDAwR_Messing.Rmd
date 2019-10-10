@@ -1,8 +1,10 @@
 ---
-title: "HW2-EDA with R - Part1: Plotting"
+title: 'HW2-EDA with R - Part1: Plotting'
 author: "misken"
 date: "September 29, 2019"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -88,6 +90,7 @@ Let's load a few libraries we'll need:
 
 ```{r}
 library(ggplot2)
+library(dplyr)
 ```
 
 
@@ -142,9 +145,14 @@ In addition, compute and display the following statistics for Income and IncomeP
 
 
 ```{r summary_stats}
-mean(county_df$Income)
-median(county_df$Income)
-summary(county_df$Income)
+x <- county_df$Income 
+mean(x)
+median(x)
+max(x)
+min(x)
+quantile(x, c(.95, .99))
+IQR(x)
+(cv <- sd(x) / mean(x))
 ```
 
 ```{r histo_dens}
@@ -158,8 +166,7 @@ ggplot(data=county_df, aes(x = IncomePerCap)) +
 
 Write a short paragraph describing the distribution of of these two variables.
 
-The Income per cap has a much tigher bell curve than just average income 
->Write more about the 2 variables
+The Income per cap has a much tigher bell curve than just average income meaning that there is less variation, but both are left justified meaning that there is a trail out to the right. this means that the curve is not normal but also that there could be outliers on the top end of the data.
 
 Repeat the histogram for Income but make the following style changes to the plot.
 
@@ -182,6 +189,7 @@ Now create a set of histograms for Income in which you facet by Division.
  ggplot(county_df) + 
    geom_histogram(aes(x=Income)) +
    labs(x = "Median income", y = "Number of counties", title = "Distribution of median income for US Divisions") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) + 
     facet_grid(. ~ Division)
 ```
 
@@ -193,7 +201,8 @@ counts. Hint: `..density..`
    geom_histogram(aes(x=(Income))) +
    facet_grid(. ~ Division) +
    scale_y_continuous(labels = scales::percent) + 
-  labs(x = "Median income", y = "Percent of counties", title = "Distribution of median income for US Regions") 
+  labs(x = "Median income", y = "Percent of counties", title = "Distribution of median income for US Regions") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 
@@ -306,7 +315,8 @@ x-axis labels so that they don't obscure each other.
 ggplot(county_df, aes(x = State)) +
   geom_bar(aes(color = Region)) + 
   scale_x_discrete(expand = waiver()) + 
-  labs(x = "State Name", y = "Number of Couties", title = "Number of Counties by State")
+  labs(x = "State Name", y = "Number of Couties", title = "Number of Counties by State") + 
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
   
 
 ```
@@ -315,6 +325,11 @@ ggplot(county_df, aes(x = State)) +
 
 ```{r bar_counties_by_state_hackerxtra, fig.height=6}
 
+
+ggplot(county_df, aes(x = State, sort = TRUE)) +
+  geom_bar(aes(fill = Region)) +  
+  labs(x = "State Name", y = "Number of Counties", title = "Number of Counties by State") +
+  coord_flip()
 
 ```
 
